@@ -15,9 +15,7 @@ client = tbot
 
 @register(pattern=r"^/gift ?(.*)")
 async def Prof(event):
-    if event.sender_id == OWNER_ID or event.sender_id == DEV_USERS:
-        pass
-    else:
+    if event.sender_id not in [OWNER_ID, DEV_USERS]:
         return
     thumb = water
     message_id = event.message.id

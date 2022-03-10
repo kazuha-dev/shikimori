@@ -48,52 +48,6 @@ def inlinequery(update: Update, _) -> None:
     user = update.effective_user
 
     results: List = []
-    inline_help_dicts = [
-        {
-            "title": "SpamProtection INFO",
-            "description": "Look up a person/bot/channel/chat on @Intellivoid SpamProtection API",
-            "message_text": "Click the button below to look up a person/bot/channel/chat on @Intellivoid SpamProtection API using "
-                            "username or telegram id",
-            "thumb_urL": "https://telegra.ph/file/e7bb5cf8dca5c2916128d.jpg",
-            "keyboard": ".spb ",
-        },
-        {
-            "title": "Account info on Miku",
-            "description": "Look up a Telegram account in Miku database",
-            "message_text": "Click the button below to look up a person in Miku database using their Telegram ID",
-            "thumb_urL": "https://telegra.ph/file/d687f2d9867d7edfa0506.jpg",
-            "keyboard": ".info ",
-        },
-        {
-            "title": "About",
-            "description": "Know about Miku",
-            "message_text": "Click the button below to get to know about Miku.",
-            "thumb_urL": "https://telegra.ph/file/99d8f926d6b99c6cb826c.jpg",
-            "keyboard": ".about ",
-        },
-        {
-            "title": "Help",
-            "description": "Help Inline Commands",
-            "message_text": "Click the button below to get Help Of Inline Commands.",
-            "thumb_urL": "https://telegra.ph/file/65a47304643fcdb34f0a7.jpg",
-            "keyboard": ".help ",
-        },
-        {
-            "title": "Anilist",
-            "description": "Search anime and manga on AniList.co",
-            "message_text": "Click the button below to search anime and manga on AniList.co",
-            "thumb_urL": "https://telegra.ph/file/561a53ed2800f4dccbe30.jpg",
-            "keyboard": ".anilist ",
-        },
-        {
-            "title": "Paste",
-            "description": "Paste <text> on pastebin.",
-            "message_text": "Click the button below to Paste on pastebin.",
-            "thumb_urL": "https://telegra.ph/file/561a53ed2800f4dccbe30.jpg",
-            "keyboard": ".paste ",
-        },
-    ]
-
     inline_funcs = {
         ".spb": spb,
         ".info": inlineinfo,
@@ -106,6 +60,52 @@ def inlinequery(update: Update, _) -> None:
     if (f := query.split(" ", 1)[0]) in inline_funcs:
         inline_funcs[f](remove_prefix(query, f).strip(), update, user)
     else:
+        inline_help_dicts = [
+            {
+                "title": "SpamProtection INFO",
+                "description": "Look up a person/bot/channel/chat on @Intellivoid SpamProtection API",
+                "message_text": "Click the button below to look up a person/bot/channel/chat on @Intellivoid SpamProtection API using "
+                                "username or telegram id",
+                "thumb_urL": "https://telegra.ph/file/e7bb5cf8dca5c2916128d.jpg",
+                "keyboard": ".spb ",
+            },
+            {
+                "title": "Account info on Miku",
+                "description": "Look up a Telegram account in Miku database",
+                "message_text": "Click the button below to look up a person in Miku database using their Telegram ID",
+                "thumb_urL": "https://telegra.ph/file/d687f2d9867d7edfa0506.jpg",
+                "keyboard": ".info ",
+            },
+            {
+                "title": "About",
+                "description": "Know about Miku",
+                "message_text": "Click the button below to get to know about Miku.",
+                "thumb_urL": "https://telegra.ph/file/99d8f926d6b99c6cb826c.jpg",
+                "keyboard": ".about ",
+            },
+            {
+                "title": "Help",
+                "description": "Help Inline Commands",
+                "message_text": "Click the button below to get Help Of Inline Commands.",
+                "thumb_urL": "https://telegra.ph/file/65a47304643fcdb34f0a7.jpg",
+                "keyboard": ".help ",
+            },
+            {
+                "title": "Anilist",
+                "description": "Search anime and manga on AniList.co",
+                "message_text": "Click the button below to search anime and manga on AniList.co",
+                "thumb_urL": "https://telegra.ph/file/561a53ed2800f4dccbe30.jpg",
+                "keyboard": ".anilist ",
+            },
+            {
+                "title": "Paste",
+                "description": "Paste <text> on pastebin.",
+                "message_text": "Click the button below to Paste on pastebin.",
+                "thumb_urL": "https://telegra.ph/file/561a53ed2800f4dccbe30.jpg",
+                "keyboard": ".paste ",
+            },
+        ]
+
         for ihelp in inline_help_dicts:
             results.append(
                 article(
@@ -168,30 +168,29 @@ def inlineinfo(query: str, update: Update, context: CallbackContext) -> None:
     nation_level_present = False
 
     if user.id == OWNER_ID:
-        text += f"\n\nThis person is my owner"
+        text += "\\n\\nThis person is my owner"
         nation_level_present = True
     elif user.id in DEV_USERS:
-        text += f"\n\nThis Person is a part Developer of Miku"
+        text += "\\n\\nThis Person is a part Developer of Miku"
         nation_level_present = True
     elif user.id in DRAGONS:
-        text += f"\n\nThe Nation level of this person is Royal"
+        text += "\\n\\nThe Nation level of this person is Royal"
         nation_level_present = True
     elif user.id in DEMONS:
-        text += f"\n\nThe Nation level of this person is Demon"
+        text += "\\n\\nThe Nation level of this person is Demon"
         nation_level_present = True
     elif user.id in TIGERS:
-        text += f"\n\nThe Nation level of this person is Tiger Level Disaster"
+        text += "\\n\\nThe Nation level of this person is Tiger Level Disaster"
         nation_level_present = True
     elif user.id in WOLVES:
-        text += f"\n\nThe Nation level of this person is Wolf Level Disaster"
+        text += "\\n\\nThe Nation level of this person is Wolf Level Disaster"
         nation_level_present = True
 
     if nation_level_present:
         text += ' [<a href="https://t.me/{}?start=nations">?</a>]'.format(bot.username)
 
     try:
-        spamwtc = sw.get_ban(int(user.id))
-        if spamwtc:
+        if spamwtc := sw.get_ban(int(user.id)):
             text += "<b>\n\n• SpamWatched:\n</b> Yes"
             text += f"\n• Reason: <pre>{spamwtc.reason}</pre>"
             text += "\n• Appeal at @SpamWatchSupport"
@@ -210,17 +209,16 @@ def inlineinfo(query: str, update: Update, context: CallbackContext) -> None:
         [
             [
                 InlineKeyboardButton(
-                    text="Report Error",
-                    url=f"https://t.me/MikusSupport",
+                    text="Report Error", url="https://t.me/MikusSupport"
                 ),
                 InlineKeyboardButton(
                     text="Search again",
                     switch_inline_query_current_chat=".info ",
                 ),
-
-            ],
+            ]
         ]
-        )
+    )
+
 
     results = [
         InlineQueryResultArticle(
@@ -294,24 +292,24 @@ def spb(query: str, update: Update, context: CallbackContext) -> None:
         response = a["success"]
         if response is True:
             date = a["results"]["last_updated"]
-            stats = f"*◢ Intellivoid• SpamProtection Info*:\n"
+            stats = "*◢ Intellivoid• SpamProtection Info*:\\n"
             stats += f' • *Updated on*: `{datetime.fromtimestamp(date).strftime("%Y-%m-%d %I:%M:%S %p")}`\n'
 
             if a["results"]["attributes"]["is_potential_spammer"] is True:
-                stats += f" • *User*: `USERxSPAM`\n"
+                stats += " • *User*: `USERxSPAM`\\n"
             elif a["results"]["attributes"]["is_operator"] is True:
-                stats += f" • *User*: `USERxOPERATOR`\n"
+                stats += " • *User*: `USERxOPERATOR`\\n"
             elif a["results"]["attributes"]["is_agent"] is True:
-                stats += f" • *User*: `USERxAGENT`\n"
+                stats += " • *User*: `USERxAGENT`\\n"
             elif a["results"]["attributes"]["is_whitelisted"] is True:
-                stats += f" • *User*: `USERxWHITELISTED`\n"
+                stats += " • *User*: `USERxWHITELISTED`\\n"
 
             stats += f' • *Type*: `{a["results"]["entity_type"]}`\n'
             stats += (
                 f' • *Language*: `{a["results"]["language_prediction"]["language"]}`\n'
             )
             stats += f' • *Language Probability*: `{a["results"]["language_prediction"]["probability"]}`\n'
-            stats += f"*Spam Prediction*:\n"
+            stats += "*Spam Prediction*:\\n"
             stats += f' • *Ham Prediction*: `{a["results"]["spam_prediction"]["ham_prediction"]}`\n'
             stats += f' • *Spam Prediction*: `{a["results"]["spam_prediction"]["spam_prediction"]}`\n'
             stats += f'*Blacklisted*: `{a["results"]["attributes"]["is_blacklisted"]}`\n'
@@ -329,16 +327,16 @@ def spb(query: str, update: Update, context: CallbackContext) -> None:
         [
             [
                 InlineKeyboardButton(
-                    text="Report Error",
-                    url=f"https://t.me/MikusSupport",
+                    text="Report Error", url="https://t.me/MikusSupport"
                 ),
                 InlineKeyboardButton(
                     text="Search again",
                     switch_inline_query_current_chat=".spb ",
                 ),
+            ]
+        ]
+    )
 
-            ],
-        ])
 
     a = "the entity was not found"
     results = [
@@ -422,7 +420,7 @@ def media_query(query: str, update: Update, context: CallbackContext) -> None:
                 description = description or "N/A"
 
             if len((str(description))) > 700:
-                description = description [0:700] + "....."
+                description = description[:700] + "....."
 
             avgsc = data.get("averageScore") or "N/A"
             status = data.get("status") or "N/A"
@@ -506,9 +504,8 @@ def help(query: str, update: Update, context: CallbackContext) -> None:
     user_id = update.effective_user.id
     user = context.bot.get_chat(user_id)
     sql.update_user(user.id, user.username)
-    help_text = f"""
-    [Miku Inline Help❤️](https://t.me/MikuXproBot)\n*Inline Help Commands:*\n*• .about:* `You Can Check My Information`\n*• .spbinfo* `To Check Your Spam Protection With Spam Protection Api`\n*• .anilist:* `To Search Animes And Mangas`\n*• .info:* `To Check Your Information`
-    """
+    help_text = """\x1f    [Miku Inline Help❤️](https://t.me/MikuXproBot)\\n*Inline Help Commands:*\\n*• .about:* `You Can Check My Information`\\n*• .spbinfo* `To Check Your Spam Protection With Spam Protection Api`\\n*• .anilist:* `To Search Animes And Mangas`\\n*• .info:* `To Check Your Information`\x1f    """
+
     results: list = []
     kb = InlineKeyboardMarkup(
         [
@@ -540,8 +537,7 @@ async def stats_callbacc(_, CallbackQuery):
     await pgram.answer_callback_query(CallbackQuery.id, text, show_alert=True)
 
 def paste(content):
-    link = _netcat("ezup.dev", 9999, content)
-    return link
+    return _netcat("ezup.dev", 9999, content)
 
 async def paste_func(query: str, update: Update, context: CallbackContext) -> None:
     """Handle the inline query."""
@@ -551,14 +547,14 @@ async def paste_func(query: str, update: Update, context: CallbackContext) -> No
     url = paste(text)
     msg = f"__**{url}**__"
     end_time = time()
-    results: list = []
-
-    results.append(
+    results: list = [
         InlineQueryResultArticle(
             id=str(uuid4()),
             title=f"Pasted In {round(end_time - start_time)} Seconds.",
             description=url,
             input_message_content=InputTextMessageContent(msg),
         )
-    )
+    ]
+
+
     update.inline_query.answer(results)
