@@ -55,15 +55,7 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 buttons = [
-    [
-                        InlineKeyboardButton(
-                             text="Summon Me 🏹",
-                             url="https://t.me/MikuXProBot?startgroup=true"),
-                        InlineKeyboardButton(
-                             text="Repo 🗞️",
-                             url="https://github.com/h0daka/Miku-Nakano"),
-                    ],
-                   [                  
+    [          
                        InlineKeyboardButton(
                              text="Help 🔐",
                              callback_data="help_back"),
@@ -246,11 +238,11 @@ def start(update: Update, context: CallbackContext):
                 [
                   [                  
                        InlineKeyboardButton(
-                             text="Support🚑",
-                             url=f"https://t.me/MikusSupport"),
+                             text="Group🌺",
+                             url=f"https://t.me/grup_anime"),
                        InlineKeyboardButton(
-                             text="Updates🛰️",
-                             url="https://t.me/MikuXUpdates")
+                             text="Channel🌸",
+                             url="https://t.me/channel_anime_indo/5")
                      ] 
                 ]
             ),
@@ -307,8 +299,8 @@ def help_button(update, context):
                 disable_web_page_preview=True,
                 reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Back",
                                        callback_data="help_back"),
-                  InlineKeyboardButton(text="Support",
-                                       url="t.me/Mikussupport")]]))
+                  InlineKeyboardButton(text="Group Chat",
+                                       url="t.me/grup_anime")]]))
 
         elif prev_match:
             curr_page = int(prev_match.group(1))
@@ -348,7 +340,7 @@ def miku_callback_data(update, context):
     uptime = get_readable_time((time.time() - StartTime))
     if query.data == "miku_":
         query.message.edit_text(
-            text=f"""Hello [{update.effective_user.first_name}](tg://user?id={update.effective_user.id}) I'm {context.bot.first_name}, a powerful group management bot built to help you manage your group easily.
+            text=f"""Hello [{update.effective_user.first_name}](tg://user?id={update.effective_user.id}) I'm {context.bot.first_name}, a powerful group management bot built to help manage my group easily.
                  \n❍ I can restrict users.
                  \n❍ I can greet users with customizable welcome messages and even set a group's rules.
                  \n❍ I have an advanced anti-flood system.
@@ -362,12 +354,12 @@ def miku_callback_data(update, context):
             reply_markup=InlineKeyboardMarkup(
                 [
                  [
-                    InlineKeyboardButton(text="My Master 🌏", url="t.me/h0daka"),
+                    InlineKeyboardButton(text="My Boyfriend❤", url="t.me/kiraisme"),
                     InlineKeyboardButton(text="Try Inline ✨", switch_inline_query_current_chat="",),
                  ],
                  [
-                    InlineKeyboardButton(text="Updates 🕊️", url="t.me/MikuXUpdates"),
-                    InlineKeyboardButton(text="Support 🚑", url="t.me/Mikussupport"),
+                    InlineKeyboardButton(text="Group Chat🌺", url="t.me/grup_anime"),
+                    InlineKeyboardButton(text="Channel🌸", url="t.me/channel_anime_indo/5"),
                  ],
                  [
                     InlineKeyboardButton(text="Back ❌", callback_data="miku_back")
@@ -401,7 +393,7 @@ def get_help(update: Update, context: CallbackContext):
         if len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
             module = args[1].lower()
             update.effective_message.reply_photo(
-            random.choice(MIKU_N_IMG), caption= f"Oh Darling, Click the Button Below to get help of {module.capitalize()}",
+            random.choice(MIKU_N_IMG), caption= f"Oh You, Click the Button Below to get help of {module.capitalize()}",
                 reply_markup=InlineKeyboardMarkup([[
                     InlineKeyboardButton(
                         text="click here",
@@ -415,7 +407,7 @@ def get_help(update: Update, context: CallbackContext):
             reply_markup=InlineKeyboardMarkup(
                 [
                   [
-                  InlineKeyboardButton(text=" Click here", url="https://t.me/MikuXProBot?start=help")
+                  InlineKeyboardButton(text=" Click here", url="https://t.me/cutieepierobot?start=help")
                   ]
                 ]
             ),
@@ -431,8 +423,8 @@ def get_help(update: Update, context: CallbackContext):
             InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="Back",
                                        callback_data="help_back"),
-                  InlineKeyboardButton(text="Support",
-                                       url="t.me/Mikussupport")]]))
+                  InlineKeyboardButton(text="Group Chat",
+                                       url="t.me/grup_anime")]]))
 
     else:
         send_help(chat.id, HELP_STRINGS)
@@ -583,8 +575,7 @@ def donate(update: Update, context: CallbackContext):
 
         if OWNER_ID != 5291415314 and DONATION_LINK:
             update.effective_message.reply_text(
-                "You can also donate to the person currently running me "
-                "[here]({})".format(DONATION_LINK),
+                "Thank you in advance, but because we are still using the free server from heroku, we don't need donations at this time, just by joining our chat group @grup_anime it is enough for us (♡˙︶˙♡)"
                 parse_mode=ParseMode.MARKDOWN)
 
     else:
@@ -630,8 +621,8 @@ def main():
                 [
                   [                  
                        InlineKeyboardButton(
-                             text="[► Summon Me◄]",
-                             url="https://t.me/MikuXProBot?startgroup=true")
+                             text="[❤]",
+                             url="https://t.me/kiraisme")
                      ] 
                 ]
             ),
